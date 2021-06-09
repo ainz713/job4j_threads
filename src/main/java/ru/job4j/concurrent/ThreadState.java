@@ -3,27 +3,28 @@ package ru.job4j.concurrent;
 public class ThreadState {
     public static void main(String[] args) {
         Thread first = new Thread(
-                () -> { }
+                () -> {
+                }
         );
         Thread second = new Thread(
-                () -> { }
+                () -> {
+                }
         );
-        state(first);
-        state(second);
-        if (first.getState() == Thread.State.TERMINATED
-                && second.getState() == Thread.State.TERMINATED) {
-            System.out.println("Работа завершена");
-            System.out.println(Thread.currentThread().getName());
+        System.out.printf("%s state: %s, %s state: %s\n",
+                first.getName(), first.getState(),
+                second.getName(), second.getState());
+        first.start();
+        second.start();
+        while (first.getState() != Thread.State.TERMINATED
+                || second.getState() != Thread.State.TERMINATED) {
+            System.out.printf("%s state: %s, %s state: %s\n",
+                    first.getName(), first.getState(),
+                    second.getName(), second.getState());
         }
-    }
-
-    public static void state(Thread thread) {
-        System.out.println(thread.getName());
-        System.out.println(thread.getState());
-        thread.start();
-        while (thread.getState() != Thread.State.TERMINATED) {
-            System.out.println(thread.getState());
-        }
-        System.out.println(thread.getState());
+        System.out.printf("%s state: %s, %s state: %s\n",
+                first.getName(), first.getState(),
+                second.getName(), second.getState());
+        System.out.println("Работа завершена");
+        System.out.println(Thread.currentThread().getName());
     }
 }
