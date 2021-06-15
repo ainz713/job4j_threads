@@ -9,40 +9,27 @@ import java.util.Map;
 @ThreadSafe
 public class UserStorage {
     @GuardedBy("this")
-    private final Map<Integer, User> users;
-
-    public UserStorage() {
-        this.users = new HashMap<>();
-    }
+    private final Map<Integer, User> users = new HashMap<>();
 
     public synchronized boolean add(User user) {
-        if (users.containsKey(user.getId())) {
-            return false;
-        }
-        users.put(user.getId(), user);
-        return true;
+        return users.putIfAbsent(user.getId(), user) != null;
     }
 
     public synchronized boolean update(User user) {
-        if (users.containsKey(user.getId())) {
-            return false;
-        }
-        users.put(user.getId(), user);
-        return true;
+        return users.replace(user.getId(), user) != null;
     }
 
     public synchronized boolean delete(User user) {
-        if (users.containsKey(user.getId())) {
-            return false;
-        }
-        users.remove(user.getId());
-        return true;
+        return users.remove(user.getId(), user);
     }
 
     public synchronized boolean transfer(int fromId, int toId, int amount) {
+        if (!users.containsKey(fromId) || !users.containsKey(toId)) {
+            return false;
+        }
         User user1 = this.users.get(fromId);
         User user2 = this.users.get(toId);
-        if (user1.getAmount() > amount) {
+        if (user1.getAmount() >= amount) {
             user1.setAmount(user1.getAmount() - amount);
             user2.setAmount(user2.getAmount() + amount);
             return true;
