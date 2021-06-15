@@ -3,6 +3,7 @@ package synch;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -14,7 +15,7 @@ public class SingleLockList<T> implements Iterable<T> {
     private final List<T> list;
 
     public SingleLockList(List<T> list) {
-        this.list = Collections.synchronizedList(list);
+        this.list = copy(list);
     }
 
     public synchronized void add(T value) {
@@ -26,9 +27,7 @@ public class SingleLockList<T> implements Iterable<T> {
     }
 
     public synchronized List<T> copy(List<T> list) {
-        List<T> rsl = Collections.synchronizedList(list);
-        rsl.addAll(list);
-        return rsl;
+        return new ArrayList<>(list);
     }
 
     @Override
