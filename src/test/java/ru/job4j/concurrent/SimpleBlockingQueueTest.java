@@ -10,11 +10,15 @@ public class SimpleBlockingQueueTest  {
     @Test
     public void whenOfferThenPoll() throws InterruptedException {
 
-        SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
+        SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(10);
 
         Thread producer = new Thread(() -> {
             for (int i = 0; i <= 10; i++) {
-                queue.offer(i);
+                try {
+                    queue.offer(i);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
