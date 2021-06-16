@@ -23,6 +23,10 @@ public class SimpleBlockingQueue<T> {
         }
     }
 
+    public synchronized boolean isEmpty() {
+        return queue.size() == 0;
+    }
+
     public void offer(T value) throws InterruptedException {
         synchronized (this) {
             while (queue.size() >= size) {
