@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.IntStream;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
@@ -23,6 +22,7 @@ public class SimpleBlockingQueueTest  {
                     queue.offer(i);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
         });
@@ -33,6 +33,7 @@ public class SimpleBlockingQueueTest  {
                     queue.poll();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
         });
@@ -54,6 +55,7 @@ public class SimpleBlockingQueueTest  {
                             queue.offer(i);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
+                            Thread.currentThread().interrupt();
                         }
                     }
                 }
