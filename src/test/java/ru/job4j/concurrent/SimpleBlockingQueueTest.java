@@ -37,8 +37,9 @@ public class SimpleBlockingQueueTest  {
                 }
             }
         });
-        consumer.start();
         producer.start();
+        consumer.start();
+        producer.join();
         consumer.join();
         assertThat(queue.getSize(), is(5));
         assertEquals(6, queue.poll().intValue());
