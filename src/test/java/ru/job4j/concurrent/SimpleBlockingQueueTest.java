@@ -21,7 +21,7 @@ public class SimpleBlockingQueueTest  {
                 try {
                     queue.offer(i);
                 } catch (InterruptedException e) {
-                   // e.printStackTrace();
+                    e.printStackTrace();
                     Thread.currentThread().interrupt();
                 }
             }
@@ -32,7 +32,7 @@ public class SimpleBlockingQueueTest  {
                 try {
                     queue.poll();
                 } catch (InterruptedException e) {
-                   // e.printStackTrace();
+                    e.printStackTrace();
                     Thread.currentThread().interrupt();
                 }
             }
@@ -55,7 +55,7 @@ public class SimpleBlockingQueueTest  {
                         try {
                             queue.offer(i);
                         } catch (InterruptedException e) {
-                            //e.printStackTrace();
+                             e.printStackTrace();
                             Thread.currentThread().interrupt();
                         }
                     }
@@ -68,7 +68,7 @@ public class SimpleBlockingQueueTest  {
                         try {
                             buffer.add(queue.poll());
                         } catch (InterruptedException e) {
-                           // e.printStackTrace();
+                            e.printStackTrace();
                             Thread.currentThread().interrupt();
                         }
                     }
