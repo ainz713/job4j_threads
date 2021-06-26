@@ -29,4 +29,8 @@ public class Cache {
     public int size() {
         return memory.size();
     }
+
+    public Base get(int key) {
+        return memory.get(key);
+    }
 }
