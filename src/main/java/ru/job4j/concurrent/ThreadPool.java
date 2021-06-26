@@ -29,6 +29,9 @@ public class ThreadPool {
                     }
             ));
         }
+        for (Thread thread : threads) {
+            thread.start();
+        }
     }
 
     public void work(Runnable job) throws InterruptedException {
@@ -39,6 +42,21 @@ public class ThreadPool {
         for (Thread t
                 :threads) {
             t.interrupt();
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        ThreadPool threadPool = new ThreadPool();
+        threadPool.work(() -> System.out.println("job1"));
+        threadPool.work(() -> System.out.println("job2"));
+        threadPool.work(() -> System.out.println("job3"));
+        threadPool.work(() -> System.out.println("job4"));
+        threadPool.work(() -> System.out.println("job5"));
+        threadPool.shutdown();
     }
 }
