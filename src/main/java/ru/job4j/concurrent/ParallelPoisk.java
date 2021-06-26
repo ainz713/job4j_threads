@@ -19,12 +19,12 @@ public class ParallelPoisk<T> extends RecursiveTask<Integer> {
 
     @Override
     protected Integer compute() {
-        if (array.length <= 10) {
+        if (endIndex - startIndex < 10) {
            return Arrays.asList(array).indexOf(index);
         }
         int mid = startIndex + ((endIndex - startIndex) / 2);
         ParallelPoisk<T> leftSide = new ParallelPoisk(array, index, startIndex, mid);
-        ParallelPoisk<T> rightSide = new ParallelPoisk(array, index, mid, endIndex);
+        ParallelPoisk<T> rightSide = new ParallelPoisk(array, index, mid + 1, endIndex);
         leftSide.fork();
         rightSide.fork();
         int left = leftSide.join();
@@ -34,6 +34,6 @@ public class ParallelPoisk<T> extends RecursiveTask<Integer> {
 
     public static <T> int findIndex(T[] array, T index) {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
-        return forkJoinPool.invoke(new ParallelPoisk<T>(array, index, 0, array.length - 1));
+        return forkJoinPool.invoke(new ParallelPoisk<>(array, index, 0, array.length - 1));
     }
 }
