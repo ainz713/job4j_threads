@@ -19,8 +19,15 @@ public class ParallelPoisk<T> extends RecursiveTask<Integer> {
 
     @Override
     protected Integer compute() {
+        int rsl = -1;
         if (endIndex - startIndex < 10) {
-           return Arrays.asList(array).indexOf(index);
+            for (int i = 0; i < array.length; i++) {
+                if (array[i] == index) {
+                    rsl = i;
+                    break;
+                }
+            }
+            return rsl;
         }
         int mid = startIndex + ((endIndex - startIndex) / 2);
         ParallelPoisk<T> leftSide = new ParallelPoisk(array, index, startIndex, mid);
