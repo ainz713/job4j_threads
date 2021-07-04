@@ -10,19 +10,19 @@ public class ThreadPool {
 
     public ThreadPool() {
         int size = Runtime.getRuntime().availableProcessors();
-        System.out.printf("available processors: %d\n", size);
+        System.out.printf("available processors: %d%s", size, System.lineSeparator());
         for (int i = 0; i < size; i++) {
             threads.add(new Thread(
                     () -> {
-                        System.out.printf("%s start\n", Thread.currentThread().getName());
+                        System.out.printf("%s start%s", Thread.currentThread().getName(), System.lineSeparator());
                         while (!Thread.currentThread().isInterrupted()) {
                             try {
                                 System.out.printf(
-                                        "%s working with\n", Thread.currentThread().getName());
+                                        "%s working with%s", Thread.currentThread().getName(), System.lineSeparator());
                                 tasks.poll().run();
                             } catch (InterruptedException e) {
                                 System.out.printf(
-                                        "%s interrupt\n", Thread.currentThread().getName());
+                                        "%s interrupt%s", Thread.currentThread().getName(), System.lineSeparator());
                                 Thread.currentThread().interrupt();
                             }
                         }
