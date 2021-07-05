@@ -21,7 +21,7 @@ public class ParallelPoisk<T> extends RecursiveTask<Integer> {
     protected Integer compute() {
         int rsl = -1;
         if (endIndex - startIndex < 10) {
-            for (int i = 0; i < array.length; i++) {
+            for (int i = startIndex; i < endIndex; i++) {
                 if (array[i] == index) {
                     rsl = i;
                     break;
