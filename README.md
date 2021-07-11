@@ -2,3 +2,4 @@
 [![codecov](https://codecov.io/gh/ainz713/job4j_threads/branch/master/graph/badge.svg?token=WETV0NMN9X)](https://codecov.io/gh/ainz713/job4j_threads)
 # job4j_threads
 "Объединение зафиксированных изменений"
+Создание ветки из IDEA
